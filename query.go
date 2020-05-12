@@ -17,6 +17,7 @@ func (server *Server) Query(url string) ([]byte, error) {
 	fullUrl := strings.Join([]string{baseUrl, url}, "")
 
 	req, err := http.NewRequest("GET", fullUrl, nil)
+	req.Header.Set("X-Authentication", "REPLACE KEY HERE")
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +39,7 @@ Query the PuppetDB instance version end-point.
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/version.html
 */
 func (server *Server) QueryVersion() (*Version, error) {
-	body, err := server.Query("meta/v1/version")
+	body, err := server.Query("pdb/meta/v1/version")
 	if err != nil {
 		return nil, err
 	}
