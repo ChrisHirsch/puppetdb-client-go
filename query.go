@@ -38,7 +38,7 @@ Query the PuppetDB instance version end-point.
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/version.html
 */
 func (server *Server) QueryVersion() (*Version, error) {
-	body, err := server.Query("v3/version")
+	body, err := server.Query("meta/v1/version")
 	if err != nil {
 		return nil, err
 	}
