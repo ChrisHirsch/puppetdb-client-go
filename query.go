@@ -17,12 +17,15 @@ func (server *Server) Query(url string) ([]byte, error) {
 	fullUrl := strings.Join([]string{baseUrl, url}, "")
 
 	req, err := http.NewRequest("GET", fullUrl, nil)
-	req.Header.Set("X-Authentication", "REPLACE KEY HERE")
 	if err != nil {
 		return nil, err
 	}
 
 	req.Header.Set("Content-Type", "application/json")
+	// Set any additional headers such as authentication, proxy, etc
+	for key, value := range server.Headers {
+		req.Header.Set(key, value)
+	}
 
 	client := &http.Client{Transport: server.HTTPTransport, Timeout: server.HTTPTimeout}
 	resp, err := client.Do(req)

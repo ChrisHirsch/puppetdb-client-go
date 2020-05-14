@@ -14,11 +14,17 @@ type Server struct {
 	BaseUrl       string
 	HTTPTransport http.RoundTripper
 	HTTPTimeout   time.Duration
+	Headers       map[string]string
 }
 
 // SetHTTPTimeout to set custom Timeout of http.Client
 func (s *Server) SetHTTPTimeout(t time.Duration) {
 	s.HTTPTimeout = t
+}
+
+// SetHeader the header
+func (s *Server) SetHeader(key string, value string) {
+	s.Headers[key] = value
 }
 
 /*
@@ -47,5 +53,6 @@ func newServer(baseUrl string, httpTransport http.RoundTripper) Server {
 		BaseUrl:       baseUrl,
 		HTTPTransport: httpTransport,
 		HTTPTimeout:   time.Second * 30,
+		Headers:       make(map[string]string),
 	}
 }
