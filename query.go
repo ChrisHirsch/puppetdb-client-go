@@ -76,7 +76,7 @@ Query the PuppetDB instance fact-names end-point.
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/fact-names.html
 */
 func (server *Server) QueryFactNames() ([]string, error) {
-	body, err := server.Query("v3/fact-names")
+	body, err := server.Query("pdb/query/v4/fact-names")
 	if err != nil {
 		return nil, err
 	}
@@ -106,12 +106,12 @@ func (server *Server) QueryCatalogs(certname string) (*CatalogWireFormat, error)
 }
 
 /*
-Query the PuppetDB instance facts end-point.
+QueryFacts - Query the PuppetDB instance facts end-point.
 
-More details here: http://docs.puppetlabs.com/puppetdb/1.6/api/query/v3/facts.html#get-v3facts
+More details here: https://puppet.com/docs/puppetdb/5.2/api/query/v4/facts.html#pdbqueryv4factsfact-name
 */
 func (server *Server) QueryFacts(queryString string) (*[]Fact, error) {
-	url := fmt.Sprintf("v3/facts?%v", queryString)
+	url := fmt.Sprintf("pdb/query/v4/facts?%v", queryString)
 
 	body, err := server.Query(url)
 	if err != nil {
@@ -125,7 +125,7 @@ func (server *Server) QueryFacts(queryString string) (*[]Fact, error) {
 }
 
 /*
-Query the PuppetDB instance facts end-point.
+QueryFactsByName - Query the PuppetDB instance facts end-point.
 
 More details here: http://docs.puppetlabs.com/puppetdb/1.6/api/query/v3/facts.html#get-v3factsname
 */
@@ -144,7 +144,7 @@ func (server *Server) QueryFactsByName(name string, queryString string) (*[]Fact
 }
 
 /*
-Query the PuppetDB instance facts end-point.
+QueryFactsByNameValue - Query the PuppetDB instance facts end-point.
 
 More details here: http://docs.puppetlabs.com/puppetdb/1.6/api/query/v3/facts.html#get-v3factsnamevalue
 */
