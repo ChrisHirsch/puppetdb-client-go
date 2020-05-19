@@ -18,7 +18,7 @@ func TestSetHTTPTimeout(t *testing.T) {
 
 func TestServer_SetHeader(t *testing.T) {
 	type fields struct {
-		BaseUrl       string
+		BaseURL       string
 		HTTPTransport http.RoundTripper
 		HTTPTimeout   time.Duration
 		Headers       map[string]string
@@ -36,7 +36,7 @@ func TestServer_SetHeader(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := &Server{
-				BaseUrl:       tt.fields.BaseUrl,
+				BaseURL:       tt.fields.BaseURL,
 				HTTPTransport: tt.fields.HTTPTransport,
 				HTTPTimeout:   tt.fields.HTTPTimeout,
 				Headers:       tt.fields.Headers,

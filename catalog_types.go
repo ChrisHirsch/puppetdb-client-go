@@ -1,7 +1,7 @@
 package puppetdb
 
 /*
-Wire format representation of a catalog.
+CatalogWireFormat - Wire format representation of a catalog.
 
 You probably want to take a look at the NewCatalogWireFormat function, as this
 is the suggested way to create a new catalog wire format data structure from
@@ -17,17 +17,17 @@ type CatalogWireFormat struct {
 }
 
 /*
-Catalog metadata struct.
+CatalogMetadata struct.
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/catalog_format.html#main-data-type-catalog
 */
 type CatalogMetadata struct {
 	// Catalog data API version
-	ApiVersion int `json:"api_version"`
+	APIVersion int `json:"api_version"`
 }
 
 /*
-Data for a catalog.
+CatalogData struct
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/catalog_format.html#main-data-type-catalog
 */
@@ -37,7 +37,7 @@ type CatalogData struct {
 	// Version of the catalog
 	Version string `json:"version"`
 	// Unique identifier provided by client to marry catalogs with reports and other (future) objects
-	TransactionUuid string `json:"transaction-uuid"`
+	TransactionUUID string `json:"transaction-uuid"`
 	// Edges represented in this catalog
 	Edges []CatalogEdge `json:"edges"`
 	// Resources represented in this catalog
@@ -45,6 +45,7 @@ type CatalogData struct {
 }
 
 /*
+CatalogEdge struct
 A representation of an edge inside a catalog.
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/catalog_format.html#data-type-edge
@@ -59,7 +60,7 @@ type CatalogEdge struct {
 }
 
 /*
-This struct represents a catalog resource reference for use in edges.
+CatalogResourceSpec struct represents a catalog resource reference for use in edges.
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/catalog_format.html#data-type-resource-spec
 */
@@ -71,12 +72,12 @@ type CatalogResourceSpec struct {
 }
 
 /*
-A collection of catalog resources
+CatalogResources - Collection of catalog resources
 */
 type CatalogResources []CatalogResource
 
 /*
-A catalog resource.
+CatalogResource struct
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/catalog_format.html#data-type-resource
 */
@@ -100,7 +101,7 @@ type CatalogResource struct {
 }
 
 /*
-Create a new catalog
+NewCatalogWireFormat - Create a new catalog
 */
 func NewCatalogWireFormat() CatalogWireFormat {
 	metadata := CatalogMetadata{0}
