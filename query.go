@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var api_version = ""
@@ -121,8 +123,11 @@ func (server *Server) QueryFact(fact string, queryElements ...string) (*[]Fact, 
 		queryString += `"` + query + `"`
 
 	}
+	if len(queryElements) > 0 {
+		queryString += "]"
+	}
 
-	fmt.Printf("queryString=%s\n", queryString)
+	log.Debugf("queryString=%s\n", queryString)
 	return server.QueryFacts(queryString, nil)
 }
 
@@ -135,9 +140,9 @@ func (server *Server) QueryFacts(queryString string, requestBody body) (*[]Fact,
 	//url := fmt.Sprintf("pdb/query/v4/facts?%v", queryString)
 	url := fmt.Sprintf("pdb/query/v4/facts/%v", queryString)
 
-	fmt.Printf("url=%s\n", url)
+	log.Debugf("url=%s\n", url)
 	if requestBody != nil {
-		//server.Body = requestBody
+		server.Body = requestBody
 	}
 
 	body, err := server.Query(url)
