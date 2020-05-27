@@ -18,7 +18,7 @@ func (server *Server) Query(url string) ([]byte, error) {
 
 	fullURL := strings.Join([]string{baseURL, url}, "")
 
-	req, err := http.NewRequest("GET", fullUrl, server.Body)
+	req, err := http.NewRequest("GET", fullURL, server.Body)
 	if err != nil {
 		return nil, err
 	}
