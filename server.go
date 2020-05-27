@@ -1,9 +1,12 @@
 package puppetdb
 
 import (
+	"io"
 	"net/http"
 	"time"
 )
+
+type body io.Reader
 
 /*
 Server Representation of a PuppetDB server instance.
@@ -15,6 +18,7 @@ type Server struct {
 	HTTPTransport http.RoundTripper
 	HTTPTimeout   time.Duration
 	Headers       map[string]string
+	Body          body
 }
 
 // SetHTTPTimeout to set custom Timeout of http.Client
