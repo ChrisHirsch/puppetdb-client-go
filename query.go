@@ -108,15 +108,36 @@ func (server *Server) QueryCatalogs(certname string) (*CatalogWireFormat, error)
 }
 
 /*
+QueryFact will take in the fact and the query
+*/
+func (server *Server) QueryFact(fact string, queryElements ...string) (*[]Fact, error) {
+	queryString := fact
+	for i, query := range queryElements {
+		if i == 0 {
+			queryString += "?query=["
+		} else {
+			queryString += `,`
+		}
+		queryString += `"` + query + `"`
+
+	}
+
+	fmt.Printf("queryString=%s\n", queryString)
+	return server.QueryFacts(queryString, nil)
+}
+
+/*
 QueryFacts - Query the PuppetDB instance facts end-point.
 
 More details here: https://puppet.com/docs/puppetdb/5.2/api/query/v4/facts.html
 */
 func (server *Server) QueryFacts(queryString string, requestBody body) (*[]Fact, error) {
-	url := fmt.Sprintf("pdb/query/v4/facts?%v", queryString)
+	//url := fmt.Sprintf("pdb/query/v4/facts?%v", queryString)
+	url := fmt.Sprintf("pdb/query/v4/facts/%v", queryString)
 
+	fmt.Printf("url=%s\n", url)
 	if requestBody != nil {
-		server.Body = requestBody
+		//server.Body = requestBody
 	}
 
 	body, err := server.Query(url)
