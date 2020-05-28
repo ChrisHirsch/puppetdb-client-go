@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-var api_version = ""
+var apiVersion = ""
 
 /*
 Query - Generic query function.
