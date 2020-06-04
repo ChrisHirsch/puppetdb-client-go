@@ -1,9 +1,12 @@
 package puppetdb
 
 import (
+	"io"
 	"net/http"
 	"time"
 )
+
+type body io.Reader
 
 /*
 Server Representation of a PuppetDB server instance.
@@ -11,14 +14,21 @@ Server Representation of a PuppetDB server instance.
 Use NewServer to create a new instance.
 */
 type Server struct {
-	BaseUrl       string
+	BaseURL       string
 	HTTPTransport http.RoundTripper
 	HTTPTimeout   time.Duration
+	Headers       map[string]string
+	Body          body
 }
 
 // SetHTTPTimeout to set custom Timeout of http.Client
 func (s *Server) SetHTTPTimeout(t time.Duration) {
 	s.HTTPTimeout = t
+}
+
+// SetHeader the header
+func (s *Server) SetHeader(key string, value string) {
+	s.Headers[key] = value
 }
 
 /*
@@ -28,8 +38,8 @@ This is usually the main entry point of this SDK, where you would create
 this initial object and use it to perform activities on the instance in
 question.
 */
-func NewServer(baseUrl string) Server {
-	return newServer(baseUrl, nil)
+func NewServer(baseURL string) Server {
+	return newServer(baseURL, nil)
 }
 
 /*
@@ -38,14 +48,15 @@ NewServerWithTransport Create a new instance of a Server for usage later.
 Comparable to NewServer, but with an additional parameter to specify the http transport
 (i.e. SSL options)
 */
-func NewServerWithTransport(baseUrl string, httpTransport http.RoundTripper) Server {
-	return newServer(baseUrl, httpTransport)
+func NewServerWithTransport(baseURL string, httpTransport http.RoundTripper) Server {
+	return newServer(baseURL, httpTransport)
 }
 
-func newServer(baseUrl string, httpTransport http.RoundTripper) Server {
+func newServer(baseURL string, httpTransport http.RoundTripper) Server {
 	return Server{
-		BaseUrl:       baseUrl,
+		BaseURL:       baseURL,
 		HTTPTransport: httpTransport,
 		HTTPTimeout:   time.Second * 30,
+		Headers:       make(map[string]string),
 	}
 }

@@ -1,10 +1,8 @@
 package puppetdb
 
 /*
-Fact command submission struct for submitting the 'replace facts' command
-to PuppetDB.
-
-More details here: http://docs.puppetlabs.com/puppetdb/latest/api/wire_format/facts_format.html
+FactsWireFormat struct for submitting the 'replace facts' command to PuppetDB.
+More details: https://puppet.com/docs/puppetdb/5.2/api/wire_format/facts_format_v5.html
 */
 type FactsWireFormat struct {
 	// Certificate name of node to replace facts for
@@ -14,12 +12,12 @@ type FactsWireFormat struct {
 }
 
 /*
-Response for fact based query end-points.
-
-More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/facts.html#get-v3facts
+Fact response based query end-points.
+https://puppet.com/docs/puppetdb/5.2/api/query/v4/facts.html#query-fields
 */
 type Fact struct {
-	Certname string `json:"certname"`
-	Name string `json:"name"`
-	Value string `json:"value"`
+	Certname    string `json:"certname"`
+	Name        string `json:"name"`
+	Value       string `json:"value"`
+	Environment string `json:"pupenv"`
 }

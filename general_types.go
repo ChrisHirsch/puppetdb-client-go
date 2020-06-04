@@ -1,7 +1,7 @@
 package puppetdb
 
 /*
-Response to servertime query end-point.
+ServerTime - Response to servertime query end-point.
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/server-time.html#get-v3server-time
 */
@@ -10,7 +10,7 @@ type ServerTime struct {
 }
 
 /*
-Response to version query end-point.
+Version - Response to version query end-point.
 
 More details here: http://docs.puppetlabs.com/puppetdb/latest/api/query/v3/version.html#get-v3version
 */
