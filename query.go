@@ -110,6 +110,51 @@ func (server *Server) QueryCatalogs(certname string) (*CatalogWireFormat, error)
 }
 
 /*
+BuildQueryInventory will take in the fact and the query
+*/
+func (server *Server) BuildQueryInventory(queryElements ...string) (*[]Inventory, error) {
+	queryString := ""
+	for i, query := range queryElements {
+		if i == 0 {
+			queryString += "?query=["
+		} else {
+			queryString += `,`
+		}
+		queryString += `"` + query + `"`
+	}
+	if len(queryElements) > 0 {
+		queryString += "]"
+	}
+
+	log.Debugf("queryString=%s\n", queryString)
+	return server.QueryInventory(queryString, nil)
+}
+
+/*
+QueryInventory - Query the PuppetDB instance inventory end-point.
+
+More details here: https://puppet.com/docs/puppetdb/5.2/api/query/v4/inventory.html
+*/
+func (server *Server) QueryInventory(queryString string, requestBody body) (*[]Inventory, error) {
+	url := fmt.Sprintf("pdb/query/v4/inventory%v", queryString)
+
+	log.Debugf("url=%s\n", url)
+	if requestBody != nil {
+		server.Body = requestBody
+	}
+
+	body, err := server.Query(url)
+	if err != nil {
+		return nil, err
+	}
+
+	var inventory []Inventory
+	json.Unmarshal(body, &inventory)
+
+	return &inventory, err
+}
+
+/*
 QueryFact will take in the fact and the query
 */
 func (server *Server) QueryFact(fact string, queryElements ...string) (*[]Fact, error) {
